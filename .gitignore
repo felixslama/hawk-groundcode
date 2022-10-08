@@ -1,4 +1,2 @@
-.pio/
-.vscode/
-*.hex
-*.elf
+env/
+__pycache__/

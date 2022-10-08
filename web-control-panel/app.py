@@ -1,33 +1,50 @@
-from cgi import test
 from flask import Flask, request, render_template
 from bs4 import BeautifulSoup
 
-def __init__(self):
-    app.jinja_env.globals.update(create_waypoint_list=create_waypoint_list)
+app = Flask(__name__)
 
-    app = Flask(__name__)
+class Waypoint:
+    def __init__(self, lat, lon):
+        self.lat = lat
+        self.lon = lon
 
-    def create_waypoint_list(filename):
-        #extract coordinates from gpx file
-        with open(filename, 'r') as f:
+class Mission:
+    def __init__(self):
+        self.mission_waypoints = []
+
+    def add_waypoint(self, waypoint):
+        self.mission_waypoints.append(waypoint)
+    
+    def calculate_center(self):
+        lat_sum = 0
+        lon_sum = 0
+        for waypoint in self.mission_waypoints:
+            lat_sum += float(waypoint.lat)
+            lon_sum += float(waypoint.lon)
+        return Waypoint(lat_sum/len(self.mission_waypoints), lon_sum/len(self.mission_waypoints))
+    
+    def insert_waypoints(self, file):
+        with open(file, 'r') as f:
             data = f.read()
         soup = BeautifulSoup(data, 'xml')
         waypoints = soup.find_all('wpt')
-        waypoints_list = []
         for waypoint in waypoints:
-            waypoints_list.append((waypoint['lat'], waypoint['lon']))
-        return waypoints_list
+            self.add_waypoint(Waypoint(waypoint['lat'], waypoint['lon']))
 
-    def build_waypoint_string(waypoint_list):
-        #build string for google maps api
-        waypoint_string = ''
-        for waypoint in waypoint_list:
-            waypoint_number = str(waypoint_list.index(waypoint) + 1)
-            waypoint_string += waypoint_number + ":" + waypoint[0] + ',' + waypoint[1] + ";"
-        return waypoint_string[:-1]
+    def waypoints_string(self):
+        string = ""
+        for waypoint in self.mission_waypoints:
+            waypoint_number = str(self.mission_waypoints.index(waypoint) + 1)
+            string += waypoint_number + ":" + waypoint.lat + ',' + waypoint.lon + ";"
+        return string
+
+
+hawk = Mission()
+hawk.insert_waypoints("redlining.gpx")
+app.jinja_env.globals.update(waypoint_list=hawk.mission_waypoints)
+app.jinja_env.globals.update(waypoint_center=hawk.calculate_center())
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
-print(build_waypoint_string(create_waypoint_list('redlining.gpx')))

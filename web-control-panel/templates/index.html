@@ -16,20 +16,21 @@
 </head>
 
 <body>
-    <b>AETHER Web Control Panel</b>
-    {{ create_waypoint_list("/home/f1re/git/hawk-groundcode/web-control-panel/redlining.gpx") }}
+    <b>AETHER Web Control Panel</b><br>
     <div id="map" style="height: 30em;"></div>
 
     <script>
-        var map = L.map('map').setView([51.505, -0.09], 13);
-
+        var map = L.map('map').setView([{{waypoint_center.lat}}, {{waypoint_center.lon}}], 17);      
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        L.marker([51.5, -0.09]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-            .openPopup();
+       {% for waypoint in waypoint_list %}
+
+            L.marker( [{{waypoint.lat}},{{waypoint.lon }}] ).addTo(map).bindPopup("HABICHT");
+
+        {% endfor %}
+        
     </script>
 </body>
 

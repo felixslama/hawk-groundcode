@@ -5,6 +5,8 @@
     <hr>
 </div>
 
-# VERSION #
+# VERSION 0.1.0 #
 
 # FEATURES #
+- import waypoints from gpx file
+- visualize waypoints on map

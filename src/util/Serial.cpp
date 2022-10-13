@@ -3,7 +3,7 @@
 #include "settings/serialSet.h"
 
 void srlError(String errorMsg) {
-    Serial.println("> Error Report:");
+    Serial.println("> Error:");
     Serial.println("> " + errorMsg);
     Serial.println(END_SEPERATOR);
 }

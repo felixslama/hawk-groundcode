@@ -1,8 +1,5 @@
 #include <Arduino.h>
 #include "hwbts.h"
-#include "util/Comms.h"
-#include "util/Serial.h"
-#include "util/OLED.h"
 #include "pins/buttonPins.h"
 
 void inithwbts() {

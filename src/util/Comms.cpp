@@ -43,7 +43,8 @@ void initLoRa() {
     }
     LoRa.onReceive(onReceive);
     LoRa.receive();
-    srlInfo("lTRX: Init Complete");
+    srlInfo("lTRX: Initialized");
+    writeToDisplay("lTRX:", "Initialized");
 }
 
 void sendLoRa(String outgoing) {

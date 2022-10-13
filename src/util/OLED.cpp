@@ -32,11 +32,11 @@ void initOLED() {
     digitalWrite(OLED_RST, HIGH);
     Wire.begin(OLED_SDA, OLED_SCL);
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3c, false, false)) {
-        srlError("Unable to initialized OLED");
+        srlError("OLED: Unable to initialize");
         while (1);
     }
     display.setTextColor(SSD1306_WHITE);
     display.setTextSize(OLED_FONT_SIZE);
-    writeToDisplay("Info:","Station Ready");
-    srlInfo("OLED initialized");
+    srlInfo("OLED: Initialized");
+    writeToDisplay("OLED:", "Initialized");
 }

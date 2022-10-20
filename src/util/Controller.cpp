@@ -1,3 +1,8 @@
+/*
+    Interfacing with the PS3 Controller
+    and other stuff related to it
+*/
+
 #include <Arduino.h>
 #include <Ps3Controller.h>
 #include "util/Serial.h"

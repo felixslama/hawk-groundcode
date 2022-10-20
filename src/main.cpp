@@ -1,3 +1,17 @@
+/*
+  main file
+  folder structure explained below
+
+  src/
+  ├─ main.cpp
+  ├─ settings/
+  │  ├─ header files with settings for other code modules
+  ├─ pin/
+  │  ├─ contains header files with pin definitions
+  ├─ util/
+  │  ├─ general use modules and code
+*/
+
 #include <Arduino.h>
 #include "util/hwbts.h"
 #include "util/Comms.h"

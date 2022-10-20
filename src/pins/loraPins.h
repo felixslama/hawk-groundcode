@@ -1,4 +1,3 @@
-// pins
 #define SCK 5
 #define MISO 19
 #define MOSI 27

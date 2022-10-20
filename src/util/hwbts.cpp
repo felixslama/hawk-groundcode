@@ -1,3 +1,7 @@
+/*
+    Hardware Button Handling
+*/
+
 #include <Arduino.h>
 #include "hwbts.h"
 #include "pins/buttonPins.h"

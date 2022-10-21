@@ -20,14 +20,15 @@
 #include "util/OLED.h"
 
 void setup() {
-    Serial.begin(115200);
-    initOLED();
-    initLoRa();
-    inithwbts();
-    initPs3();
+  Serial.begin(115200);
+  initOLED();
+  initLoRa();
+  inithwbts();
+  initPs3();
 }
 
 void loop() {
-    hwbtListener();
-    ps3Stat();
+  handleLoRa();
+  hwbtListener();
+  ps3Stat();
 }

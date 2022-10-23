@@ -7,14 +7,14 @@
 #include "Serial.h"
 #include "settings/serialSet.h"
 
-void srlError(String errorMsg) {
+void srlError(String type, String errorMsg) {
     Serial.println("> Error:");
-    Serial.println("> " + errorMsg);
+    Serial.println("> " + type + ": " + errorMsg);
     Serial.println(END_SEPERATOR);
 }
 
-void srlInfo(String infoMsg) {
+void srlInfo(String type, String infoMsg) {
     Serial.println("> Info:");
-    Serial.println("> " + infoMsg);
+    Serial.println("> " + type + ": " + infoMsg);
     Serial.println(END_SEPERATOR);
 }

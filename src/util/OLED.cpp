@@ -7,14 +7,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "util/Comms.h"
 #include "util/Serial.h"
 #include "pins/oledPins.h"
 #include "settings/oledSet.h"
 #include "OLED.h"
 
 // display
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RST);
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
 
 // write to display
 void writeToDisplay(String type, String msg) {
@@ -30,17 +29,13 @@ void writeToDisplay(String type, String msg) {
 
 // initialize display
 void initOLED() {
-    pinMode(OLED_RST, OUTPUT);
-    digitalWrite(OLED_RST, LOW);
-    delay(20);
-    digitalWrite(OLED_RST, HIGH);
     Wire.begin(OLED_SDA, OLED_SCL);
     if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3c, false, false)) {
-        srlError("OLED: Unable to initialize");
+        srlError("OLED", "Unable to initialize");
         while (1);
     }
     display.setTextColor(SSD1306_WHITE);
     display.setTextSize(OLED_FONT_SIZE);
-    srlInfo("OLED: Initialized");
+    srlInfo("OLED", "Initialized");
     writeToDisplay("OLED:", "Initialized");
 }

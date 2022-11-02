@@ -10,8 +10,13 @@
 #include "util/OLED.h"
 #include "settings/ps3Set.h"
 
-unsigned long prevMillis = 0;
+// timeouts for main
+unsigned long prCTRL = 0;
+unsigned long crCTRL = 0;
+// main stick val array
 int stickOut[4];
+// button array
+int btnOut[6];
 
 void onConnect() {
     srlInfo("ps3ctl", "Connected");
@@ -31,6 +36,12 @@ void procps3() {
         stickOut[1] = Ps3.data.analog.stick.rx;
         stickOut[2] = Ps3.data.analog.stick.lx;
         stickOut[3] = Ps3.data.analog.stick.ly;
+        btnOut[0] = Ps3.data.analog.button.r2;
+        btnOut[1] = Ps3.data.analog.button.l2;
+        btnOut[2] = Ps3.data.button.cross;
+        btnOut[3] = Ps3.data.button.square;
+        btnOut[4] = Ps3.data.button.triangle;
+        btnOut[5] = Ps3.data.button.circle;
         // apply deadzone
         for (int i = 0; i < 4; i = i + 1) {
             if (stickOut[i] < DEADZONE && stickOut[i] > (DEADZONE*(-1)) ) {
@@ -40,11 +51,12 @@ void procps3() {
     } else return;
 }
 
+// main controller fetch loop
 void ps3Stat() {
     if (Ps3.isConnected()) {
-        unsigned long currMillis = millis();
-        if (currMillis - prevMillis > PS3_LOG_INTERVAL) {
-            prevMillis = currMillis;
+        crCTRL = millis();
+        if (crCTRL - prCTRL > PS3_LOG_INTERVAL) {
+            prCTRL = crCTRL;
             String LOG_STRING = "("
                 + String(stickOut[0]) 
                 + "/" + String(stickOut[1])
@@ -58,6 +70,12 @@ void ps3Stat() {
     } else return;
 }
 
-int fetchControllerVals(int id) {
+// expose controls
+int fetchCtrl(int id) {
     return stickOut[id];
+}
+
+// expose buttons
+int fetchBtn(int id) {
+    return btnOut[id];
 }
